@@ -1,0 +1,20 @@
+{
+  "name": "parcial2_pw_sec02_c2_2025_00111522",
+  "version": "1.0.0",
+  "description": "Segundo parcial de PW",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andersonhdz21/Parcial2_PW_SEC02_C2_2025_00111522.git"
+  },
+  "keywords": [],
+  "author": "Anderson Miguel Hernandez Gutierrez / 00111522",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Andersonhdz21/Parcial2_PW_SEC02_C2_2025_00111522/issues"
+  },
+  "homepage": "https://github.com/Andersonhdz21/Parcial2_PW_SEC02_C2_2025_00111522#readme"
+}
