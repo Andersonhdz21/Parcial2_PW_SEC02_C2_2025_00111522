@@ -45,3 +45,12 @@ exports.getCuentaByQuery = (req, res) => {
     res.json({ finded: true, data: resultados });
   }
 };
+
+exports.getCuentasBalance = (req, res) => {
+  const balances = cuentas.map(c => ({
+    client: c.client,
+    balance: c.balance
+  }));
+
+  res.json({ count: balances.length, data: balances });
+};
