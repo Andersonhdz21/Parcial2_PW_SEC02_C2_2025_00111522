@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Andersonhdz21/Parcial2_PW_SEC02_C2_2025_00111522/issues"
   },
-  "homepage": "https://github.com/Andersonhdz21/Parcial2_PW_SEC02_C2_2025_00111522#readme"
+  "homepage": "https://github.com/Andersonhdz21/Parcial2_PW_SEC02_C2_2025_00111522#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
