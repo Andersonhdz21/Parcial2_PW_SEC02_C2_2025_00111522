@@ -19,38 +19,44 @@ exports.getCuentaById = (req, res) => {
 };
 
 exports.getCuentaByQuery = (req, res) => {
-  const query = req.query.queryParam;
-  const isActiveFilter = req.query.isActive;
+  const { queryParam } = req.query;
 
-  let resultados = cuentas;
-
-    if (isActiveFilter !== undefined) {
-    const isActiveBool = isActiveFilter === 'true';
-    resultados = resultados.filter(c => c.isActive === isActiveBool);
+  if (!queryParam || String(queryParam).trim() === '') {
+    return res.status(400).json({
+      finded: false,
+      message: 'Debe enviar ?queryParam=valor (id, name o gender)'
+    });
   }
 
-  if (query) {
-    resultados = resultados.filter(c =>
-      c._id === query ||
-      c.client.toLowerCase().includes(query.toLowerCase()) ||
-      c.gender.toLowerCase() === query.toLowerCase()
-    ); 
+  const q = String(queryParam).trim().toLowerCase();
+  const byId = cuentas.find(c => String(c._id).toLowerCase() === q);
+  if (byId) {
+    return res.json({ finded: true, account: byId });
   }
 
-  if (resultados.length === 0) {
-    res.json({ finded: false });
-  } else if (resultados.length === 1) {
-    res.json({ finded: true, account: resultados[0] });
-  } else {
-    res.json({ finded: true, data: resultados });
+  const byName = cuentas.filter(c => String(c.name || '').toLowerCase().includes(q));
+  if (byName.length === 1) {
+    return res.json({ finded: true, account: byName[0] });
   }
+  if (byName.length > 1) {
+    return res.json({ finded: true, data: byName });
+  }
+
+  if (q === 'male' || q === 'female') {
+    const byGender = cuentas.filter(c => String(c.gender || '').toLowerCase() === q);
+    return res.json({ finded: byGender.length > 0, data: byGender });
+  }
+
+  return res.json({ finded: false, account: null });
 };
 
 exports.getCuentasBalance = (req, res) => {
-  const balances = cuentas.map(c => ({
-    client: c.client,
-    balance: c.balance
-  }));
-
-  res.json({ count: balances.length, data: balances });
+  const activas = cuentas.filter(c => c.isActive === true);
+  // parsear "$1,234.56" => 1234.56
+  const parseMoney = (s) => {
+    if (typeof s !== 'string') return Number(s || 0);
+    return Number(s.replace(/\$/g, '').replace(/,/g, '')) || 0;
+  };
+  const accountBalance = activas.reduce((acc, c) => acc + parseMoney(c.balance), 0);
+  return res.json({ status: activas.length > 0, accountBalance });
 };

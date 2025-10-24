@@ -2,10 +2,10 @@ const express = require ('express');
 const router = express.Router();
 const controladorCuentas = require ('../controladores/controladores_cuentas');
 
-router.get('/:id', controladorCuentas.getCuentaById); //id
+router.get('/', controladorCuentas.getCuentaByQuery);
 
-router.get ('/', controladorCuentas.getCuentaByQuery); //querys con parametros
+router.get('/:id', controladorCuentas.getCuentaById);
 
-router.get('/extra/balance', controladorCuentas.getCuentasBalance); //balance
+router.get('/extra/balance', controladorCuentas.getCuentasBalance);
 
 module.exports = router;
